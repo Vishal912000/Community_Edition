@@ -1,0 +1,24 @@
+-- Databricks notebook source
+-- MAGIC %run /Users/choutakurivishal@gmail.com/Tables/Employee_with_duplicates
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC # Extract unique department info from employees_df
+-- MAGIC departments_df = employees_df.select("dept_id", "dept").distinct()
+-- MAGIC
+-- MAGIC
+-- MAGIC
+-- MAGIC
+-- MAGIC
+-- MAGIC # Register as a temp view (optional, if you want to run SQL queries)
+-- MAGIC departments_df.createOrReplaceTempView("departments_df")
+-- MAGIC
+-- MAGIC # excluding one department for problem solving
+-- MAGIC departments_df=spark.sql(f"""select * from departments_df
+-- MAGIC                          where dept_id in (101,102,103,104)
+-- MAGIC                          """)
+-- MAGIC
+-- MAGIC departments_df.createOrReplaceTempView("departments_df")
+-- MAGIC
+-- MAGIC

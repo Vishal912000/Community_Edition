@@ -1,0 +1,64 @@
+-- Databricks notebook source
+-- MAGIC %python
+-- MAGIC from pyspark.sql import Row
+-- MAGIC
+-- MAGIC # Define base list of managers (they're also employees)
+-- MAGIC managers = [
+-- MAGIC     Row(emp_id=100, name='John Smith', dept='IT', dept_id=103, manager=None, manager_id=None, salary=120000),
+-- MAGIC     Row(emp_id=101, name='Jane Doe', dept='Finance', dept_id=102, manager='John Smith', manager_id=100, salary=110000),
+-- MAGIC     Row(emp_id=102, name='Alice Brown', dept='HR', dept_id=101, manager='Jane Doe', manager_id=101, salary=105000),
+-- MAGIC     Row(emp_id=103, name='Mark Taylor', dept='Marketing', dept_id=104, manager='John Smith', manager_id=100, salary=108000),
+-- MAGIC     Row(emp_id=104, name='Emily Davis', dept='Sales', dept_id=105, manager='Alice Brown', manager_id=102, salary=107000)
+-- MAGIC ]
+-- MAGIC
+-- MAGIC # Define other employees (some are duplicates)
+-- MAGIC employees = [
+-- MAGIC     Row(emp_id=105, name='Ethan White', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=90000),
+-- MAGIC     Row(emp_id=106, name='Olivia Green', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=85000),
+-- MAGIC     Row(emp_id=107, name='Mason Black', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=80000),
+-- MAGIC     Row(emp_id=108, name='Ava Blue', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=83000),
+-- MAGIC     Row(emp_id=109, name='Liam Gray', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=86000),
+-- MAGIC     Row(emp_id=110, name='Sophia Wood', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=91000),
+-- MAGIC     Row(emp_id=111, name='Noah Stone', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=88000),
+-- MAGIC     Row(emp_id=112, name='Isabella Snow', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=82000),
+-- MAGIC     Row(emp_id=113, name='Lucas Storm', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=87000),
+-- MAGIC     Row(emp_id=114, name='Mia Breeze', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=89000),
+-- MAGIC     # Duplicates start here
+-- MAGIC     Row(emp_id=105, name='Ethan White', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=90000),
+-- MAGIC     Row(emp_id=106, name='Olivia Green', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=85000),
+-- MAGIC     Row(emp_id=107, name='Mason Black', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=80000),
+-- MAGIC     Row(emp_id=108, name='Ava Blue', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=83000),
+-- MAGIC     Row(emp_id=109, name='Liam Gray', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=86000),
+-- MAGIC     Row(emp_id=115, name='Ella Moss', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=92000),
+-- MAGIC     Row(emp_id=116, name='Henry Wave', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=87000),
+-- MAGIC     Row(emp_id=117, name='Lily Rose', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=81000),
+-- MAGIC     Row(emp_id=118, name='James Cliff', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=84000),
+-- MAGIC     Row(emp_id=119, name='Chloe Sky', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=88000),
+-- MAGIC     Row(emp_id=120, name='Logan Ray', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=93000),
+-- MAGIC     Row(emp_id=121, name='Zoe Lake', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=86000),
+-- MAGIC     Row(emp_id=122, name='Ryan Field', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=80000),
+-- MAGIC     Row(emp_id=123, name='Aria Dawn', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=85000),
+-- MAGIC     Row(emp_id=124, name='Caleb Moon', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=87000),
+-- MAGIC     # Duplicate group again
+-- MAGIC     Row(emp_id=115, name='Ella Moss', dept='IT', dept_id=103, manager='John Smith', manager_id=100, salary=92000),
+-- MAGIC     Row(emp_id=116, name='Henry Wave', dept='Finance', dept_id=102, manager='Jane Doe', manager_id=101, salary=87000),
+-- MAGIC     Row(emp_id=117, name='Lily Rose', dept='HR', dept_id=101, manager='Alice Brown', manager_id=102, salary=81000),
+-- MAGIC     Row(emp_id=118, name='James Cliff', dept='Marketing', dept_id=104, manager='Mark Taylor', manager_id=103, salary=84000),
+-- MAGIC     Row(emp_id=119, name='Chloe Sky', dept='Sales', dept_id=105, manager='Emily Davis', manager_id=104, salary=88000)
+-- MAGIC ]
+-- MAGIC
+-- MAGIC # Combine managers and employees
+-- MAGIC employee_data = managers + employees  # 5 managers + 45 employees (with duplicates) = 50 records
+-- MAGIC
+-- MAGIC # Create DataFrame
+-- MAGIC employees_df = spark.createDataFrame(employee_data)
+-- MAGIC
+-- MAGIC # Register as a temp view
+-- MAGIC employees_df.createOrReplaceTempView("employees_df")
+-- MAGIC
+-- MAGIC
+-- MAGIC
+
+-- COMMAND ----------
+
+select * from employees_df

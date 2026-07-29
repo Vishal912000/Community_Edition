@@ -12,6 +12,11 @@
 
 # COMMAND ----------
 
+d=input("please enter a name")
+print(d)
+
+# COMMAND ----------
+
 df_1=spark.read.csv("dbfs:/FileStore/shared_uploads/choutakurivishal@gmail.com/circuits.csv")
 #display(df_1)
 

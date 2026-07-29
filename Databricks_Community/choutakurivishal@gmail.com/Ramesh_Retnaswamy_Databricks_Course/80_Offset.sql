@@ -1,0 +1,29 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC ***OFFSET***:
+-- MAGIC
+-- MAGIC > **`OFFSET` is used to skip a specific number of rows in the result set before starting to return rows.**
+-- MAGIC
+-- MAGIC
+-- MAGIC When we run a query , `OFFSET` tells SQL:
+-- MAGIC > "Skip the first **N** rows, and give me the ones after that."
+-- MAGIC  Example:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC SELECT * FROM employees_df
+-- MAGIC ORDER BY salary DESC
+-- MAGIC LIMIT 5 OFFSET 10;
+-- MAGIC ```
+-- MAGIC
+-- MAGIC This means:
+-- MAGIC - Sort employees by salary (highest first)
+-- MAGIC - Skip the first **10** rows
+-- MAGIC - Then return the **next 5 rows**
+-- MAGIC ---
+-- MAGIC
+-- MAGIC ### 📝 Key Points:
+-- MAGIC
+-- MAGIC - `OFFSET 0` → don’t skip anything (start from the top)
+-- MAGIC - `OFFSET 1` → skip the first row
+-- MAGIC - Often used with `LIMIT` to get pages of data (pagination)
+-- MAGIC
