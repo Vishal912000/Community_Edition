@@ -42,4 +42,8 @@
 # MAGIC
 # MAGIC Let me know if you'd like this exported to CSV, Markdown, or formatted for a slide deck.
 # MAGIC
+<<<<<<< Updated upstream
+
+======
+>>>>>>> Stashed changes
 

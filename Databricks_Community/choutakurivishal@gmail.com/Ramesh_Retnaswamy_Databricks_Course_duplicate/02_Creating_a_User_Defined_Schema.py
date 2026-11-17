@@ -50,4 +50,8 @@ circuits_2=StructType(fields=[StructField("circuitId",IntegerType(),False),
 # COMMAND ----------
 
 
+<<<<<<< Updated upstream
+
+======
+>>>>>>> Stashed changes
 

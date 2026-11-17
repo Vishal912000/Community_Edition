@@ -26,4 +26,8 @@ df_renamed=df.withColumnRenamed("circuitId","circuit_id")\
                 .withColumnRenamed("lat","latitude")\
                 .withColumnRenamed("lng","longitude")\
                 .withColumnRenamed("alt","altitude")
+<<<<<<< Updated upstream
+
+======
+>>>>>>> Stashed changes
 
